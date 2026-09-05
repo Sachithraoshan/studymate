@@ -1,0 +1,14 @@
+# Operating System files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary uploads (keep directory structure)
+uploads/materials/*
+!uploads/materials/.gitkeep
