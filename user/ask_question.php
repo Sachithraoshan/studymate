@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uid = $_SESSION['user_id'];
 
     if ($title === '' || $subject_id === 0) {
-        $errors[] = "Please enter a question title and select a module subject.";
+        $errors[] = "Please enter a question title and select a computing module.";
     }
 
     if (empty($errors)) {
@@ -29,20 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $base = '../';
-$page_title = 'Ask a Question';
+$page_title = 'Ask Question';
 include __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="row justify-content-center">
   <div class="col-lg-8">
-    <div class="card card-sm p-4 p-md-5">
+    <div class="card card-lms p-4 p-md-5">
       <div class="d-flex align-items-center gap-3 mb-4 border-bottom pb-3">
-        <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+        <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-4 p-3" style="width: 56px; height: 56px;">
           <i class="fa-solid fa-circle-question fa-2xl"></i>
         </div>
         <div>
-          <h4 class="fw-bold mb-1">Post a Question</h4>
-          <p class="text-muted small mb-0">Ask your peers and classmates for help on difficult topics or assignment concepts</p>
+          <h4 class="fw-bold font-heading mb-1">Post a Question</h4>
+          <p class="text-muted small mb-0">Ask your peers for help on assignment logic, coursework, or exam prep</p>
         </div>
       </div>
 
@@ -57,7 +57,7 @@ include __DIR__ . '/../includes/header.php';
         </div>
 
         <div class="mb-3">
-          <label class="form-label small fw-bold">Subject Module <span class="text-danger">*</span></label>
+          <label class="form-label small fw-bold">Computing Module <span class="text-danger">*</span></label>
           <select name="subject_id" class="form-select" required>
             <option value="">-- Select Subject Module --</option>
             <?php while ($s = $subjects->fetch_assoc()): ?>
@@ -68,12 +68,12 @@ include __DIR__ . '/../includes/header.php';
 
         <div class="mb-4">
           <label class="form-label small fw-bold">Question Details &amp; Context</label>
-          <textarea name="description" class="form-control" rows="5" placeholder="Explain what you are trying to solve, error messages, or specific code logic you need help with..."><?php echo htmlspecialchars($_POST['details'] ?? ''); ?></textarea>
+          <textarea name="details" class="form-control" rows="5" placeholder="Explain what you are trying to solve, error messages, or code snippets..."><?php echo htmlspecialchars($_POST['details'] ?? ''); ?></textarea>
         </div>
 
         <div class="d-flex align-items-center justify-content-between pt-2">
-          <a href="questions.php" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
-          <button type="submit" class="btn btn-sm-primary rounded-pill px-4"><i class="fa-solid fa-paper-plane me-2"></i>Post Question</button>
+          <a href="questions.php" class="btn btn-lms-outline rounded-pill px-4">Cancel</a>
+          <button type="submit" class="btn btn-lms-primary rounded-pill px-4"><i class="fa-solid fa-paper-plane me-2"></i>Post Question</button>
         </div>
       </form>
     </div>

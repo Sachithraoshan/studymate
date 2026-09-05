@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uid = $_SESSION['user_id'];
 
     if ($name === '' || $subject_id === 0) {
-        $errors[] = "Please specify a group title and select a subject module.";
+        $errors[] = "Please specify a group title and select a computing module.";
     }
 
     if (empty($errors)) {
@@ -29,27 +29,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt2->execute();
         $stmt2->close();
 
-        $_SESSION['flash_success'] = "Study group created successfully!";
+        $_SESSION['flash_success'] = "Study circle created successfully!";
         header("Location: group_detail.php?id=$newId");
         exit;
     }
 }
 
 $base = '../';
-$page_title = 'Create Study Group';
+$page_title = 'Create Study Circle';
 include __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="row justify-content-center">
   <div class="col-lg-8">
-    <div class="card card-sm p-4 p-md-5">
+    <div class="card card-lms p-4 p-md-5">
       <div class="d-flex align-items-center gap-3 mb-4 border-bottom pb-3">
-        <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning rounded-3 p-3">
+        <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning rounded-4 p-3" style="width: 56px; height: 56px;">
           <i class="fa-solid fa-people-group fa-2xl"></i>
         </div>
         <div>
-          <h4 class="fw-bold mb-1">Create a Study Group</h4>
-          <p class="text-muted small mb-0">Build a collaborative study circle with fellow undergraduates for module assignments</p>
+          <h4 class="fw-bold font-heading mb-1">Create a Study Circle</h4>
+          <p class="text-muted small mb-0">Build a collaborative study group with fellow undergraduates for module goals</p>
         </div>
       </div>
 
@@ -60,11 +60,11 @@ include __DIR__ . '/../includes/header.php';
       <form method="POST" id="groupForm" novalidate>
         <div class="mb-3">
           <label class="form-label small fw-bold">Study Group Name <span class="text-danger">*</span></label>
-          <input type="text" name="group_name" class="form-control" placeholder="e.g. OOP Java Exam Revision Squad" required value="<?php echo htmlspecialchars($_POST['group_name'] ?? ''); ?>">
+          <input type="text" name="group_name" class="form-control" placeholder="e.g. OOP Java Final Exam Revision Squad" required value="<?php echo htmlspecialchars($_POST['group_name'] ?? ''); ?>">
         </div>
 
         <div class="mb-3">
-          <label class="form-label small fw-bold">Subject Module <span class="text-danger">*</span></label>
+          <label class="form-label small fw-bold">Computing Module <span class="text-danger">*</span></label>
           <select name="subject_id" class="form-select" required>
             <option value="">-- Select Subject Module --</option>
             <?php while ($s = $subjects->fetch_assoc()): ?>
@@ -75,12 +75,12 @@ include __DIR__ . '/../includes/header.php';
 
         <div class="mb-4">
           <label class="form-label small fw-bold">Group Goals &amp; Overview</label>
-          <textarea name="description" class="form-control" rows="4" placeholder="Briefly describe what this group will work on (e.g. weekly revision, coursework prep, sharing past paper answers)..."><?php echo htmlspecialchars($_POST['description'] ?? ''); ?></textarea>
+          <textarea name="description" class="form-control" rows="4" placeholder="Describe what this study group will focus on (e.g. weekly revision, coursework prep, sharing past paper answers)..."><?php echo htmlspecialchars($_POST['description'] ?? ''); ?></textarea>
         </div>
 
         <div class="d-flex align-items-center justify-content-between pt-2">
-          <a href="study_groups.php" class="btn btn-outline-secondary rounded-pill px-4">Cancel</a>
-          <button type="submit" class="btn btn-sm-primary rounded-pill px-4"><i class="fa-solid fa-check me-2"></i>Create Group</button>
+          <a href="study_groups.php" class="btn btn-lms-outline rounded-pill px-4">Cancel</a>
+          <button type="submit" class="btn btn-lms-primary rounded-pill px-4"><i class="fa-solid fa-check me-2"></i>Create Group</button>
         </div>
       </form>
     </div>

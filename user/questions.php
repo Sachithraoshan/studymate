@@ -26,46 +26,48 @@ include __DIR__ . '/../includes/header.php';
 
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
   <div>
-    <h3 class="fw-bold mb-1"><i class="fa-solid fa-comments text-success me-2"></i> Peer Q&amp;A Forum</h3>
-    <p class="text-muted small mb-0">Ask questions, share solutions, and discuss NSBM module coursework</p>
+    <h2 class="fw-bold font-heading mb-1"><i class="fa-solid fa-comments text-success me-2"></i> Academic Q&amp;A Forum</h2>
+    <p class="text-muted small mb-0">Ask questions, troubleshoot code errors, and learn through peer discussion</p>
   </div>
-  <a href="ask_question.php" class="btn btn-sm-primary rounded-pill"><i class="fa-solid fa-plus me-1"></i> Post Question</a>
+  <a href="ask_question.php" class="btn btn-lms-primary rounded-pill"><i class="fa-solid fa-plus me-1"></i> Post Question</a>
 </div>
 
-<div class="card card-sm p-3 mb-4">
+<!-- Horizontal Subject Filter Bar -->
+<div class="lms-pill-filter mb-4">
+  <a href="questions.php" class="pill-item <?php echo $subjectFilter==0 ? 'active' : ''; ?>">All Modules</a>
+  <?php while ($s = $subjects->fetch_assoc()): ?>
+    <a href="questions.php?subject=<?php echo $s['subject_id']; ?>" class="pill-item <?php echo $subjectFilter==$s['subject_id'] ? 'active' : ''; ?>">
+      <?php echo htmlspecialchars($s['subject_name']); ?>
+    </a>
+  <?php endwhile; ?>
+</div>
+
+<div class="card card-lms p-3 mb-4">
   <form class="row g-2" method="GET">
-    <div class="col-md-6">
+    <div class="col-md-9">
       <div class="input-group">
         <span class="input-group-text bg-white text-muted border-end-0"><i class="fa-solid fa-magnifying-glass"></i></span>
-        <input type="text" name="q" class="form-control border-start-0" placeholder="Search questions or keywords..." value="<?php echo htmlspecialchars($search); ?>">
+        <input type="text" name="q" class="form-control border-start-0" placeholder="Search forum questions or keywords..." value="<?php echo htmlspecialchars($search); ?>">
       </div>
     </div>
-    <div class="col-md-4">
-      <select name="subject" class="form-select">
-        <option value="0">All Module Subjects</option>
-        <?php while ($s = $subjects->fetch_assoc()): ?>
-          <option value="<?php echo $s['subject_id']; ?>" <?php echo $subjectFilter==$s['subject_id']?'selected':''; ?>><?php echo htmlspecialchars($s['subject_name']); ?></option>
-        <?php endwhile; ?>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-sm-primary w-100"><i class="fa-solid fa-filter me-1"></i> Filter</button>
+    <div class="col-md-3">
+      <button class="btn btn-lms-primary w-100"><i class="fa-solid fa-filter me-1"></i> Search Forum</button>
     </div>
   </form>
 </div>
 
 <div class="d-flex flex-column gap-3">
 <?php $c=0; while ($q = $questions->fetch_assoc()): $c++; ?>
-  <div class="card card-sm p-4">
+  <div class="card card-lms p-4">
     <div class="d-flex align-items-start justify-content-between gap-3">
       <div class="flex-grow-1">
         <div class="d-flex align-items-center gap-2 mb-2">
-          <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-1 fw-bold small">
+          <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-1 fw-bold fs-8">
             <?php echo htmlspecialchars($q['subject_name']); ?>
           </span>
-          <span class="text-muted fs-7"><i class="fa-solid fa-user me-1"></i><?php echo htmlspecialchars($q['full_name']); ?> &bull; <?php echo date('d M Y', strtotime($q['created_at'])); ?></span>
+          <span class="text-muted fs-8"><i class="fa-solid fa-user me-1"></i><?php echo htmlspecialchars($q['full_name']); ?> &bull; <?php echo date('d M Y', strtotime($q['created_at'])); ?></span>
         </div>
-        <h5 class="fw-bold mb-2">
+        <h5 class="fw-bold font-heading mb-2">
           <a href="question_detail.php?id=<?php echo $q['question_id']; ?>" class="text-dark text-decoration-none hover-primary">
             <?php echo htmlspecialchars($q['title']); ?>
           </a>
@@ -80,7 +82,7 @@ include __DIR__ . '/../includes/header.php';
           <i class="fa-solid fa-comment-dots text-primary"></i> <?php echo $q['answer_count']; ?>
         </span>
         <div class="mt-2">
-          <a href="question_detail.php?id=<?php echo $q['question_id']; ?>" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fs-7">Reply</a>
+          <a href="question_detail.php?id=<?php echo $q['question_id']; ?>" class="btn btn-sm btn-lms-outline rounded-pill px-3 fs-8">Reply</a>
         </div>
       </div>
     </div>
@@ -88,12 +90,12 @@ include __DIR__ . '/../includes/header.php';
 <?php endwhile; ?>
 
 <?php if ($c===0): ?>
-  <div class="card card-sm p-5 text-center">
-    <div class="empty-state">
-      <i class="fa-solid fa-comments text-muted mb-3" style="font-size: 48px;"></i>
-      <h5 class="fw-bold mb-1">No questions posted yet</h5>
-      <p class="text-muted small mb-3">Be the first student to post a question for your peers!</p>
-      <a href="ask_question.php" class="btn btn-sm-primary rounded-pill px-4"><i class="fa-solid fa-plus me-1"></i> Ask a Question</a>
+  <div class="card card-lms p-5 text-center">
+    <div class="py-4 text-muted">
+      <i class="fa-solid fa-comments mb-2" style="font-size: 48px; opacity: 0.4;"></i>
+      <h5 class="fw-bold font-heading mb-1 text-dark">No questions found</h5>
+      <p class="small mb-3">Be the first student to post a question for your classmates!</p>
+      <a href="ask_question.php" class="btn btn-lms-primary rounded-pill px-4"><i class="fa-solid fa-plus me-1"></i> Post Question</a>
     </div>
   </div>
 <?php endif; ?>

@@ -13,62 +13,70 @@ $myAnswers   = $conn->query("SELECT COUNT(*) c FROM answers WHERE answered_by=$u
 $recentMaterials = $conn->query("SELECT m.title, s.subject_name, m.status, m.created_at FROM materials m JOIN subjects s ON m.subject_id=s.subject_id WHERE m.uploaded_by=$uid ORDER BY m.created_at DESC LIMIT 5");
 
 $base = '../';
-$page_title = 'My Dashboard';
+$page_title = 'Student Dashboard';
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom">
-  <div>
-    <h3 class="fw-bold mb-1"><i class="fa-solid fa-house-user text-success me-2"></i>Welcome, <?php echo htmlspecialchars($_SESSION['full_name']); ?></h3>
-    <p class="text-muted small mb-0">NSBM Student Portal &bull; Peer Learning Dashboard</p>
+<div class="lms-hero-card mb-4 p-4 p-md-5">
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+    <div>
+      <span class="lms-badge-pill mb-2">
+        <i class="fa-solid fa-graduation-cap"></i> Faculty of Computing &bull; Year 1 Semester 2
+      </span>
+      <h2 class="fw-bold mb-1 text-white font-heading">Welcome back, <?php echo htmlspecialchars($_SESSION['full_name']); ?> 👋</h2>
+      <p class="text-white-50 mb-0">Track your module resources, ask peer questions, and manage study circles.</p>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="upload_material.php" class="btn btn-light rounded-pill fw-bold text-success px-3"><i class="fa-solid fa-cloud-arrow-up me-1"></i> Upload File</a>
+      <a href="ask_question.php" class="btn btn-outline-light rounded-pill px-3"><i class="fa-solid fa-circle-question me-1"></i> Ask Question</a>
+    </div>
   </div>
-  <a href="upload_material.php" class="btn btn-sm-primary rounded-pill"><i class="fa-solid fa-cloud-arrow-up me-2"></i>Upload Resource</a>
 </div>
 
 <div class="row g-4 mb-4">
   <div class="col-md-3 col-6">
-    <div class="dashboard-stat stat-1">
+    <div class="lms-stat-card stat-emerald">
       <i class="fa-solid fa-file-arrow-up stat-icon"></i>
-      <div class="text-white-50 small font-monospace uppercase fw-bold">My Uploads</div>
-      <div class="fs-1 fw-extrabold mt-1"><?php echo $myMaterials; ?></div>
+      <div class="text-white-50 small fw-bold font-heading">MY UPLOADS</div>
+      <div class="fs-1 fw-extrabold font-heading mt-1"><?php echo $myMaterials; ?></div>
     </div>
   </div>
   <div class="col-md-3 col-6">
-    <div class="dashboard-stat stat-2">
+    <div class="lms-stat-card stat-sky">
       <i class="fa-solid fa-circle-question stat-icon"></i>
-      <div class="text-white-50 small font-monospace uppercase fw-bold">Questions Asked</div>
-      <div class="fs-1 fw-extrabold mt-1"><?php echo $myQuestions; ?></div>
+      <div class="text-white-50 small fw-bold font-heading">QUESTIONS ASKED</div>
+      <div class="fs-1 fw-extrabold font-heading mt-1"><?php echo $myQuestions; ?></div>
     </div>
   </div>
   <div class="col-md-3 col-6">
-    <div class="dashboard-stat stat-3">
+    <div class="lms-stat-card stat-amber">
       <i class="fa-solid fa-comment-dots stat-icon"></i>
-      <div class="text-white-50 small font-monospace uppercase fw-bold">Answers Provided</div>
-      <div class="fs-1 fw-extrabold mt-1"><?php echo $myAnswers; ?></div>
+      <div class="text-white-50 small fw-bold font-heading">ANSWERS GIVEN</div>
+      <div class="fs-1 fw-extrabold font-heading mt-1"><?php echo $myAnswers; ?></div>
     </div>
   </div>
   <div class="col-md-3 col-6">
-    <div class="dashboard-stat stat-4">
+    <div class="lms-stat-card stat-violet">
       <i class="fa-solid fa-people-group stat-icon"></i>
-      <div class="text-white-50 small font-monospace uppercase fw-bold">Groups Joined</div>
-      <div class="fs-1 fw-extrabold mt-1"><?php echo $myGroups; ?></div>
+      <div class="text-white-50 small fw-bold font-heading">GROUPS JOINED</div>
+      <div class="fs-1 fw-extrabold font-heading mt-1"><?php echo $myGroups; ?></div>
     </div>
   </div>
 </div>
 
 <div class="row g-4">
   <div class="col-lg-8">
-    <div class="card card-sm p-4">
+    <div class="card card-lms p-4">
       <div class="d-flex align-items-center justify-content-between mb-3">
-        <h5 class="fw-bold mb-0"><i class="fa-solid fa-clock-rotate-left text-success me-2"></i>My Upload Activity</h5>
-        <a href="materials.php" class="btn btn-sm btn-outline-secondary rounded-pill">Browse All Materials</a>
+        <h5 class="fw-bold font-heading mb-0"><i class="fa-solid fa-clock-rotate-left text-success me-2"></i>My Submissions &amp; Status</h5>
+        <a href="materials.php" class="btn btn-sm btn-lms-outline rounded-pill">Browse All Materials</a>
       </div>
       <div class="table-responsive">
-        <table class="table table-custom">
+        <table class="table table-hover align-middle">
           <thead>
-            <tr>
-              <th>Material Title</th>
-              <th>Subject Module</th>
+            <tr class="text-muted fs-8 font-heading uppercase">
+              <th>Resource Title</th>
+              <th>Module Subject</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -83,9 +91,9 @@ include __DIR__ . '/../includes/header.php';
           <?php if ($c===0): ?>
             <tr>
               <td colspan="3">
-                <div class="empty-state py-4">
-                  <i class="fa-solid fa-folder-open"></i>
-                  <p class="text-muted small mb-0">No uploaded materials yet. Share your lecture notes or past paper solutions!</p>
+                <div class="text-center py-4 text-muted">
+                  <i class="fa-solid fa-folder-open mb-2" style="font-size: 36px; opacity: 0.4;"></i>
+                  <p class="small mb-0">No resource submissions yet. Contribute your notes or past paper solutions!</p>
                 </div>
               </td>
             </tr>
@@ -97,24 +105,24 @@ include __DIR__ . '/../includes/header.php';
   </div>
 
   <div class="col-lg-4">
-    <div class="card card-sm p-4">
-      <h5 class="fw-bold mb-3"><i class="fa-solid fa-bolt text-warning me-2"></i>Quick Actions</h5>
+    <div class="card card-lms p-4">
+      <h5 class="fw-bold font-heading mb-3"><i class="fa-solid fa-bolt text-warning me-2"></i>LMS Shortcuts</h5>
       <div class="d-grid gap-2">
-        <a href="upload_material.php" class="btn btn-sm-primary text-start d-flex align-items-center justify-content-between p-3 rounded-3">
-          <span><i class="fa-solid fa-upload me-2"></i> Upload Lecture Notes / Papers</span>
-          <i class="fa-solid fa-chevron-right small"></i>
+        <a href="materials.php" class="btn btn-lms-outline text-start d-flex align-items-center justify-content-between p-3">
+          <span><i class="fa-solid fa-book-open text-success me-2"></i> Browse Course Notes &amp; Papers</span>
+          <i class="fa-solid fa-chevron-right small text-muted"></i>
         </a>
-        <a href="ask_question.php" class="btn btn-outline-secondary text-start d-flex align-items-center justify-content-between p-3 rounded-3">
-          <span><i class="fa-solid fa-circle-question me-2 text-primary"></i> Post Module Question</span>
-          <i class="fa-solid fa-chevron-right small"></i>
+        <a href="upload_material.php" class="btn btn-lms-outline text-start d-flex align-items-center justify-content-between p-3">
+          <span><i class="fa-solid fa-cloud-arrow-up text-primary me-2"></i> Upload Lecture Document</span>
+          <i class="fa-solid fa-chevron-right small text-muted"></i>
         </a>
-        <a href="create_group.php" class="btn btn-outline-secondary text-start d-flex align-items-center justify-content-between p-3 rounded-3">
-          <span><i class="fa-solid fa-people-group me-2 text-success"></i> Create Study Group</span>
-          <i class="fa-solid fa-chevron-right small"></i>
+        <a href="questions.php" class="btn btn-lms-outline text-start d-flex align-items-center justify-content-between p-3">
+          <span><i class="fa-solid fa-comments text-warning me-2"></i> Join Q&amp;A Forum</span>
+          <i class="fa-solid fa-chevron-right small text-muted"></i>
         </a>
-        <a href="materials.php" class="btn btn-outline-secondary text-start d-flex align-items-center justify-content-between p-3 rounded-3">
-          <span><i class="fa-solid fa-book-open me-2 text-warning"></i> Browse NSBM Materials</span>
-          <i class="fa-solid fa-chevron-right small"></i>
+        <a href="study_groups.php" class="btn btn-lms-outline text-start d-flex align-items-center justify-content-between p-3">
+          <span><i class="fa-solid fa-people-group text-info me-2"></i> Study Circle Groups</span>
+          <i class="fa-solid fa-chevron-right small text-muted"></i>
         </a>
       </div>
     </div>

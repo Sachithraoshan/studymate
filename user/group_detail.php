@@ -40,38 +40,38 @@ include __DIR__ . '/../includes/header.php';
 ?>
 
 <div class="mb-3">
-  <a href="study_groups.php" class="btn btn-sm btn-outline-secondary rounded-pill"><i class="fa-solid fa-arrow-left me-1"></i> Back to Study Groups</a>
+  <a href="study_groups.php" class="btn btn-sm btn-lms-outline rounded-pill"><i class="fa-solid fa-arrow-left me-1"></i> Back to Study Circles</a>
 </div>
 
-<div class="card card-sm p-4 mb-4">
+<div class="card card-lms p-4 p-md-5 mb-4">
   <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
     <div>
       <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-1 fw-bold mb-2">
         <?php echo htmlspecialchars($group['subject_name']); ?>
       </span>
-      <h3 class="fw-bold mb-1"><?php echo htmlspecialchars($group['group_name']); ?></h3>
+      <h2 class="fw-bold font-heading mb-1"><?php echo htmlspecialchars($group['group_name']); ?></h2>
       <p class="text-muted small mb-0"><i class="fa-solid fa-crown text-warning me-1"></i> Created by <strong><?php echo htmlspecialchars($group['full_name']); ?></strong></p>
     </div>
     <div>
       <?php if ($isMember): ?>
         <a href="?action=leave" class="btn btn-outline-danger rounded-pill px-4"><i class="fa-solid fa-user-minus me-1"></i> Leave Group</a>
       <?php else: ?>
-        <a href="?action=join" class="btn btn-sm-primary rounded-pill px-4"><i class="fa-solid fa-user-plus me-1"></i> Join Group</a>
+        <a href="?action=join" class="btn btn-lms-primary rounded-pill px-4"><i class="fa-solid fa-user-plus me-1"></i> Join Group</a>
       <?php endif; ?>
     </div>
   </div>
 
-  <div class="p-3 bg-light rounded-3">
+  <div class="p-4 bg-light rounded-4">
     <p class="mb-0 text-dark"><?php echo nl2br(htmlspecialchars($group['description'])); ?></p>
   </div>
 </div>
 
-<div class="card card-sm p-4">
-  <h5 class="fw-bold mb-3"><i class="fa-solid fa-users text-success me-2"></i> Group Members (<?php echo $members->num_rows; ?>)</h5>
+<div class="card card-lms p-4">
+  <h5 class="fw-bold font-heading mb-3"><i class="fa-solid fa-users text-success me-2"></i> Group Members (<?php echo $members->num_rows; ?>)</h5>
   <div class="table-responsive">
-    <table class="table table-custom">
+    <table class="table table-hover align-middle">
       <thead>
-        <tr>
+        <tr class="text-muted fs-8 font-heading uppercase">
           <th>Student Name</th>
           <th>Student Email</th>
           <th>Joined Date</th>
@@ -80,8 +80,8 @@ include __DIR__ . '/../includes/header.php';
       <tbody>
       <?php while ($m = $members->fetch_assoc()): ?>
         <tr>
-          <td class="fw-semibold"><i class="fa-solid fa-circle-user text-primary me-2"></i><?php echo htmlspecialchars($m['full_name']); ?></td>
-          <td class="text-muted"><?php echo htmlspecialchars($m['email']); ?></td>
+          <td class="fw-semibold text-dark"><i class="fa-solid fa-circle-user text-primary me-2"></i><?php echo htmlspecialchars($m['full_name']); ?></td>
+          <td class="text-muted small"><?php echo htmlspecialchars($m['email']); ?></td>
           <td class="text-muted small"><?php echo date('d M Y', strtotime($m['joined_at'])); ?></td>
         </tr>
       <?php endwhile; ?>
